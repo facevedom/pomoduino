@@ -4,10 +4,8 @@ LEDMatrix led;
 
 void setup()
 {
-
+  greet();
 }
 
 void loop() {
-  led.lightPixel(1, 4);
-  led.refreshScreen();
 }

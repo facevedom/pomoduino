@@ -10,17 +10,22 @@ LEDMatrix::LEDMatrix()
     digitalWrite(_col[thisPin], HIGH);
   }
 
+  clearScreen();
+}
+
+void LEDMatrix::lightPixel(int x, int y)
+{
+  _pixels[x][y] = LOW;
+}
+
+void LEDMatrix::clearScreen()
+{
   // initialize the pixel matrix:
   for (int x = 0; x < 8; x++) {
     for (int y = 0; y < 8; y++) {
       _pixels[x][y] = HIGH;
     }
   }
-}
-
-void LEDMatrix::lightPixel(int x, int y)
-{
-  _pixels[x][y] = LOW;
 }
 
 void LEDMatrix::refreshScreen()

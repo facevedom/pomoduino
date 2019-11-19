@@ -7,6 +7,7 @@ class LEDMatrix
 {
   public:
     LEDMatrix();
+    void clearScreen();
     void refreshScreen();
     void lightPixel(int x, int y);
   private:
