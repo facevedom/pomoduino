@@ -8,6 +8,8 @@ LEDMatrix::LEDMatrix()
     pinMode(_row[thisPin], OUTPUT);
     // take the col pins (i.e. the cathodes) high to ensure that the LEDS are off:
     digitalWrite(_col[thisPin], HIGH);
+
+    pinMode(13, INPUT_PULLUP);
   }
 
   clearScreen();
@@ -28,8 +30,17 @@ void LEDMatrix::clearScreen()
   }
 }
 
+void checkInterrupt() {
+  int val = digitalRead(13);
+
+  while (val) {
+    val = digitalRead(13);
+  }
+}
+
 void LEDMatrix::refreshScreen()
 {
+  checkInterrupt();
   // iterate over the rows (anodes):
   for (int thisRow = 0; thisRow < 8; thisRow++) {
     // take the row pin (anode) high:
