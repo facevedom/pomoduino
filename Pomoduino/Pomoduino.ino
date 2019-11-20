@@ -6,18 +6,30 @@ const float pause_duration_mins = 5;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(12, OUTPUT);
+
+  digitalWrite(12, HIGH);
+  delay(100);
+  digitalWrite(12, LOW);
+
   flashThreeTimes();
   greet();
 }
 
-void loop() {  
+void loop() {
   for (int pomodoros = 0; pomodoros < 4; pomodoros ++) {
     startPomodoro();
     led.clearScreen();
+    digitalWrite(12, HIGH);
+    delay(100);
+    digitalWrite(12, LOW);
     flashThreeTimes();
     led.clearScreen();
     startPause();
     led.clearScreen();
+    digitalWrite(12, HIGH);
+    delay(100);
+    digitalWrite(12, LOW);
     flashThreeTimes();
   }
 
