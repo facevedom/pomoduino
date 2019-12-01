@@ -22,7 +22,7 @@ void greet() {
   // Gradually dim the screen
   for (int i = DEFAULT_SCREEN_INTENSITY; i > 0; i--) {
     lc.setIntensity(0, i);
-    delay(150);
+    delay(300);
   }
 
   // Clear the screen and return to normal intensity level
@@ -34,5 +34,23 @@ void displayScreen(byte screen[]) {
   for (int i = 0; i < 8; i++)
   {
     lc.setRow(0, i, screen[i]);
+  }
+}
+
+// Flash the screen three times
+void displaychangeSignal() {
+  digitalWrite(BUZZER_PIN, HIGH);
+  delay(100);
+  digitalWrite(BUZZER_PIN, LOW);
+
+  for (int j = 0; j < 3; j++) {
+    for (int i = 0; i < 8; i++)
+    {
+      lc.setRow(0, i, B11111111);
+    }
+    
+    delay(300);
+    lc.clearDisplay(0);
+    delay(300);
   }
 }
