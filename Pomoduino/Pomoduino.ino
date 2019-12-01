@@ -3,10 +3,10 @@
 LedControl lc = LedControl(12, 10, 11, 1); // Pins: DIN,CLK,CS, # of Display connected
 int DEFAULT_SCREEN_INTENSITY = 5;
 int BUTTON_PIN = 9;
-int BUZZER_PIN = 14;
+int BUZZER_PIN = 15;
 
-const float POMODORO_DURATION_MINS = 1;
-const float PAUSE_DURATION_MINS = 1;
+const float POMODORO_DURATION_MINS = 30;
+const float PAUSE_DURATION_MINS = 5;
 
 String stage = "";
 bool skipPause = false;
@@ -95,6 +95,7 @@ void wait(long interval) {
   unsigned long startTime = millis();
 
   while (millis() - startTime < interval) {
+    Serial.println(digitalRead(BUTTON_PIN));
     interrupt = !digitalRead(BUTTON_PIN);
     if (interrupt) {
       interrupted = true;
