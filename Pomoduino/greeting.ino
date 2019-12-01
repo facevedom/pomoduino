@@ -1,119 +1,38 @@
-const int tomato[8][8] = {
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 1, 1, 1, 1, 0, 0},
-  {0, 1, 1, 1, 1, 1, 1, 0},
-  {0, 1, 1, 1, 1, 1, 1, 0},
-  {0, 1, 1, 1, 1, 1, 1, 0},
-  {0, 1, 1, 1, 1, 1, 1, 0},
-  {0, 0, 1, 1, 1, 1, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0}
+const int GREETING_SCREEN_DELAY = 600; // Display time of each of the greeting screens
+
+const byte greeting_screens[5][8] =
+{
+  { B11110000, B10010000, B10010000, B11110000, B10000000, B10000111, B00000101, B00000111 },
+  { B10001000, B11011000, B10101000, B10001000, B10001000, B00000111, B00000101, B00000111 },
+  { B00000000, B00000000, B11001010, B10101010, B10101010, B11001110, B00000000, B00000000 },
+  { B00000000, B00000000, B11101001, B01001101, B01001011, B11101001, B00000000, B00000000 },
+  { B00000000, B00000000, B00111100, B00100100, B00100100, B00111100, B00000000, B00000000 }
 };
-
-const int screen_1[8][8] = {
-  {1, 1, 1, 1, 0, 0, 0, 0},
-  {1, 0, 0, 1, 0, 0, 0, 0},
-  {1, 0, 0, 1, 0, 0, 0, 0},
-  {1, 1, 1, 1, 0, 0, 0, 0},
-  {1, 0, 0, 0, 0, 0, 0, 0},
-  {1, 0, 0, 0, 0, 1, 1, 1},
-  {0, 0, 0, 0, 0, 1, 0, 1},
-  {0, 0, 0, 0, 0, 1, 1, 1}
-};
-
-const int screen_2[8][8] = {
-  {1, 0, 0, 0, 1, 0, 0, 0},
-  {1, 1, 0, 1, 1, 0, 0, 0},
-  {1, 0, 1, 0, 1, 0, 0, 0},
-  {1, 0, 0, 0, 1, 0, 0, 0},
-  {1, 0, 0, 0, 1, 0, 0, 0},
-  {0, 0, 0, 0, 0, 1, 1, 1},
-  {0, 0, 0, 0, 0, 1, 0, 1},
-  {0, 0, 0, 0, 0, 1, 1, 1}
-};
-
-const int screen_3[8][8] = {
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {1, 1, 0, 0, 1, 0, 1, 0},
-  {1, 0, 1, 0, 1, 0, 1, 0},
-  {1, 0, 1, 0, 1, 0, 1, 0},
-  {1, 1, 0, 0, 1, 1, 1, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0}
-};
-
-const int screen_4[8][8] = {
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {1, 1, 1, 0, 1, 0, 0, 1},
-  {0, 1, 0, 0, 1, 1, 0, 1},
-  {0, 1, 0, 0, 1, 0, 1, 1},
-  {1, 1, 1, 0, 1, 0, 0, 1},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0}
-};
-
-const int screen_5[8][8] = {
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 1, 1, 1, 1, 0, 0},
-  {0, 0, 1, 0, 0, 1, 0, 0},
-  {0, 0, 1, 0, 0, 1, 0, 0},
-  {0, 0, 1, 1, 1, 1, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0},
-  {0, 0, 0, 0, 0, 0, 0, 0}
-};
-
-
-void greetingDisplayScreen(int screen[8][8]) {
-  unsigned long startTime = millis();
-  const long interval = 600;
-
-  for (int x = 0; x < 8; x ++) {
-    for (int y = 0; y < 8; y ++) {
-      if (screen[x][y])
-        led.lightPixel(x, y);
-    }
-  }
-
-  while (millis() - startTime < interval) {
-    led.refreshScreen();
-  }
-  led.clearScreen();
-  delay(200);
-}
 
 void greet() {
-  greetingDisplayScreen(screen_1);
-  greetingDisplayScreen(screen_2);
-  greetingDisplayScreen(screen_3);
-  greetingDisplayScreen(screen_4);
-  greetingDisplayScreen(screen_5);
-  led.clearScreen();
-}
+  // Number of screens in the greeting
+  int screen_count = sizeof(greeting_screens) / sizeof(greeting_screens)[0];
 
-void flash() {
-  unsigned long startTime = millis();
-  const long interval = 600;
-
-  for (int x = 0; x < 8; x ++) {
-    for (int y = 0; y < 8; y ++) {
-      led.lightPixel(x, y);
-    }
+  // Display all of the greeting screens
+  for (int i = 0; i < screen_count; i++) {
+    displayScreen(greeting_screens[i]);
+    delay(GREETING_SCREEN_DELAY);
   }
 
-  while (millis() - startTime < interval) {
-    led.refreshScreen();
+  // Gradually dim the screen
+  for (int i = DEFAULT_SCREEN_INTENSITY; i > 0; i--) {
+    lc.setIntensity(0, i);
+    delay(150);
   }
 
-  led.clearScreen();
+  // Clear the screen and return to normal intensity level
+  lc.clearDisplay(0);    // Clear Display
+  lc.setIntensity(0, DEFAULT_SCREEN_INTENSITY); // Set intensity level
 }
 
-void flashThreeTimes() {
-  flash();
-  delay(300);
-  flash();
-  delay(300);
-  flash();
-  delay(300);
+void displayScreen(byte screen[]) {
+  for (int i = 0; i < 8; i++)
+  {
+    lc.setRow(0, i, screen[i]);
+  }
 }

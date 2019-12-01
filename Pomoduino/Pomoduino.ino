@@ -1,86 +1,27 @@
-#include <LEDMatrix.h>
+#include "LedControl.h"
 
-LEDMatrix led;
-const float pomodoro_duration_mins = 25;
-const float pause_duration_mins = 5;
+LedControl lc = LedControl(12, 10, 11, 1); // Pins: DIN,CLK,CS, # of Display connected
+int DEFAULT_SCREEN_INTENSITY = 5;
+int BUTTON_PIN = 9;
 
-void setup() {
+void setup()
+{
+  // Serial communication setup
   Serial.begin(9600);
-  pinMode(12, OUTPUT);
 
-  digitalWrite(12, HIGH);
-  delay(100);
-  digitalWrite(12, LOW);
+  // LED matrix setup
+  lc.shutdown(0, false); // Wake up display
+  lc.setIntensity(0, DEFAULT_SCREEN_INTENSITY); // Set intensity level
+  lc.clearDisplay(0);    // Clear Display
 
-  flashThreeTimes();
+  // Button setup
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  // Start with a greeting
   greet();
 }
 
-void loop() {
-  for (int pomodoros = 0; pomodoros < 4; pomodoros ++) {
-    startPomodoro();
-    led.clearScreen();
-    digitalWrite(12, HIGH);
-    delay(100);
-    digitalWrite(12, LOW);
-    flashThreeTimes();
-    led.clearScreen();
-    startPause();
-    led.clearScreen();
-    digitalWrite(12, HIGH);
-    delay(100);
-    digitalWrite(12, LOW);
-    flashThreeTimes();
-  }
-
-  exit(0);
-}
-
-// This is how long each LED should be on to fill the matrix in the requested minutes
-int getLedDuration(bool pause) {
-  int leds;
-  float minutes;
-
-  if (pause) {
-    leds = 8;
-    minutes = pause_duration_mins;
-  } else {
-    leds = 64;
-    minutes = pomodoro_duration_mins;
-  }
-
-  // convert minutes into milliseconds, then divide by the number of LEDs
-  float led_duration = minutes * 60000 / leds;
-  return ((int) led_duration);
-}
-
-void startPomodoro() {
-  Serial.println("Starting Pomodoro");
-
-  for (int x = 0; x < 8; x ++) {
-    for (int y = 0; y < 8; y ++) {
-      {
-        led.lightPixel(x, y);
-        wait(getLedDuration(false));
-      }
-    }
-  }
-}
-
-void startPause() {
-  for (int x = 7; x >= 0; x --) {
-    for (int y = 0; y < 8; y ++) {
-      led.lightPixel(x, y);
-    }
-    wait(getLedDuration(true));
-  }
-}
-
-
-void wait(long interval) {
-  unsigned long startTime = millis();
-
-  while (millis() - startTime < interval) {
-    led.refreshScreen();
-  }
+void loop()
+{
+  int val = digitalRead(BUTTON_PIN);
 }
