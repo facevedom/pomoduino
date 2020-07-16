@@ -4,7 +4,8 @@ pipeline {
             label 'master'
             customWorkspace 'Pomoduino'
         }
-
+    }
+    
     stages {
         stage('Compile') {
             steps {
