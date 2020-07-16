@@ -1,15 +1,12 @@
 pipeline {
-    agent {
-        node {
-            label 'master'
-            customWorkspace 'raspiduino/raspiduino/pomoduino/Pomoduino'
-        }
-    }
+    agent any
 
     stages {
         stage('Compile') {
             steps {
-                sh 'arduino-cli compile --fqbn arduino:avr:uno'
+                dir('Pomoduino') {
+                    sh 'arduino-cli compile --fqbn arduino:avr:uno'
+                }
             }
         }
         stage('Test') {
