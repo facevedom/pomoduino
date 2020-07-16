@@ -2,7 +2,7 @@ pipeline {
     agent {
         node {
             label 'master'
-            customWorkspace 'raspiduino/raspiduino/Pomoduino'
+            customWorkspace 'raspiduino/raspiduino/pomoduino/Pomoduino'
         }
     }
 
