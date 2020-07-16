@@ -9,14 +9,11 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Upload') {
             steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+                dir('Pomoduino') {
+                    sh 'arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:uno --input-dir build/arduino.avr.uno/'
+                }
             }
         }
     }
