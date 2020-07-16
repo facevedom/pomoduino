@@ -2,11 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Configure Arduino-CLI') {
+        stage('Compile') {
             steps {
-                sh 'arduino-cli config init'
-                sh 'arduino-cli core update-index'
-                sh 'arduino-cli core install arduino:avr'
+                sh 'arduino-cli compile --fqbn arduino:avr:uno'
             }
         }
         stage('Test') {
