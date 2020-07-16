@@ -1,11 +1,11 @@
 pipeline {
-    agent
+    agent {
         node {
             label 'master'
             customWorkspace 'Pomoduino'
         }
     }
-    
+
     stages {
         stage('Compile') {
             steps {
